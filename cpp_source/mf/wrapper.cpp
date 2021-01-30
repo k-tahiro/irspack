@@ -14,7 +14,7 @@ namespace py = pybind11;
 using namespace ials11;
 using std::vector;
 
-PYBIND11_MODULE(_ials, m) {
+PYBIND11_MODULE(_mf, m) {
   std::stringstream doc_stream;
   doc_stream << "irspack's core module for \"IALSRecommender\"." << std::endl
              << "Built to use" << std::endl

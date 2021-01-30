@@ -5,7 +5,7 @@ from numpy import float32
 """irspack's core module for "IALSRecommender".
 Built to use
 	SSE, SSE2"""
-import irspack.recommenders._ials
+import irspack.recommenders._mf
 from typing import *
 from typing import Iterable as iterable
 from typing import Iterator as iterator

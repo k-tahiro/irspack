@@ -11,8 +11,8 @@ from ..definitions import (
     InteractionMatrix,
     UserIndexArray,
 )
-from ._ials import IALSLearningConfigBuilder
-from ._ials import IALSTrainer as CoreTrainer
+from ._mf import IALSLearningConfigBuilder
+from ._mf import IALSTrainer as CoreTrainer
 from .base import BaseRecommenderWithItemEmbedding, BaseRecommenderWithUserEmbedding
 from .base_earlystop import BaseRecommenderWithEarlyStopping, TrainerBase
 

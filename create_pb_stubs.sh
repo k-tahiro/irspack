@@ -1,12 +1,12 @@
 #!/bin/sh
-pybind11-stubgen -o stubs --no-setup-py irspack.recommenders._ials
-rm irspack/recommenders/_ials.pyi
+pybind11-stubgen -o stubs --no-setup-py irspack.recommenders._mf
+rm irspack/recommenders/_mf.pyi
 echo 'm: int
 n: int
 from numpy import float32
-' >> irspack/recommenders/_ials.pyi
-cat stubs/irspack/recommenders/_ials-stubs/__init__.pyi >> irspack/recommenders/_ials.pyi
-black irspack/recommenders/_ials.pyi
+' >> irspack/recommenders/_mf.pyi
+cat stubs/irspack/recommenders/_mf-stubs/__init__.pyi >> irspack/recommenders/_mf.pyi
+black irspack/recommenders/_mf.pyi
 
 pybind11-stubgen -o stubs --no-setup-py irspack._evaluator
 rm irspack/_evaluator.pyi
