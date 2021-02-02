@@ -26,3 +26,5 @@ Pipfile.lock
 pybind11
 docs/build/
 docs/source/api_reference/
+
+*.pyx
