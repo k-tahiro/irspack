@@ -5,7 +5,9 @@
 #include <map>
 #include <vector>
 
-namespace ials11 {
+namespace irspack {
+namespace ials {
+
 using namespace std;
 
 struct IALSLearningConfig {
@@ -78,4 +80,5 @@ struct IALSLearningConfig {
     }
   };
 };
-} // namespace ials11
+} // namespace ials
+} // namespace irspack

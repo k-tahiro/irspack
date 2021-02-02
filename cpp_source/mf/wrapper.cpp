@@ -11,7 +11,7 @@
 #include <vector>
 
 namespace py = pybind11;
-using namespace ials11;
+using namespace irspack::ials;
 using std::vector;
 
 PYBIND11_MODULE(_mf, m) {

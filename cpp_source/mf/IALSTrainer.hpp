@@ -13,7 +13,8 @@
 #include <thread>
 #include <vector>
 
-namespace ials11 {
+namespace irspack {
+namespace ials {
 using namespace std;
 
 struct Solver {
@@ -290,4 +291,5 @@ public:
 private:
   SparseMatrix X, X_t;
 };
-} // namespace ials11
+} // namespace ials
+} // namespace irspack
