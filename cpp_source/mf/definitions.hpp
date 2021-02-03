@@ -12,4 +12,9 @@ using DenseMatrix =
     Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 using DenseVector = Eigen::Matrix<Real, Eigen::Dynamic, 1>;
 } // namespace ials
+
+namespace bpr {
+using IndexType = std::size_t;
+
+} // namespace bpr
 } // namespace irspack

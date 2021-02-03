@@ -2,7 +2,6 @@
 #include "IALSLearningConfig.hpp"
 #include "definitions.hpp"
 #include <Eigen/Cholesky>
-#include <Eigen/IterativeLinearSolvers>
 #include <atomic>
 #include <cstddef>
 #include <future>
