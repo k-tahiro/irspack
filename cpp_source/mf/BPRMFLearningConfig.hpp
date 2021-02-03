@@ -54,6 +54,11 @@ template <typename Real> struct BPRMFLearningConfig {
       return *this;
     }
 
+    Builder &set_n_components(size_t n_components) {
+      this->n_components = n_components;
+      return *this;
+    }
+
     Builder &set_user_alpha(Real user_alpha) {
       this->user_alpha = user_alpha;
       return *this;
@@ -69,7 +74,7 @@ template <typename Real> struct BPRMFLearningConfig {
       return *this;
     }
 
-    Builder &set_sgd_type(bool sgd_type) {
+    Builder &set_sgd_type(SGDType sgd_type) {
       this->sgd_type = sgd_type;
       return *this;
     }

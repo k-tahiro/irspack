@@ -14,7 +14,7 @@
 namespace irspack {
 namespace bpr {
 
-template <typename Real, typename SparseMatrix>
+template <typename SparseMatrix>
 std::vector<std::set<int64_t>>
 compute_positive_index_loc_set(const SparseMatrix &X) {
   std::vector<std::set<int64_t>> result(X.rows());
@@ -33,8 +33,7 @@ std = D * \sqrt{2/ 3}
 */
 
 template <typename Real, class MatrixType>
-void fill_random(Eigen::Ref<MatrixType> &target, Real stdev,
-                 std::mt19937 &rng) {
+inline void fill_random(MatrixType &target, Real stdev, std::mt19937 &rng) {
   std::uniform_real_distribution<Real> dist(-std::sqrt(2.0 / 3.0) * stdev,
                                             std::sqrt(2.0 / 3.0) * stdev);
   for (uint64_t i = 0; i < target.rows(); i++) {
@@ -60,10 +59,10 @@ template <typename Real> struct BPRMFTrainer {
         item_bias(X.cols()),
         positive_index_loc_set(compute_positive_index_loc_set(X)) {
     this->X.makeCompressed();
-    fil_random(user_factor, static_cast<Real>(1 / 12.0) * config.n_components,
-               this->rng);
-    fil_random(item_factor, static_cast<Real>(1 / 12.0) * config.n_components,
-               this->rng);
+    fill_random(user_factor, static_cast<Real>(1 / 12.0) * config.n_components,
+                this->rng);
+    fill_random(item_factor, static_cast<Real>(1 / 12.0) * config.n_components,
+                this->rng);
     user_bias.array() = static_cast<Real>(0.0);
     item_bias.array() = static_cast<Real>(0.0);
 
@@ -103,7 +102,7 @@ template <typename Real> struct BPRMFTrainer {
   int64_t n_users, n_items;
   DenseMatrix user_factor, item_factor;
   DenseVector user_bias, item_bias;
-  std::vector<std::set<uint64_t>> positive_index_loc_set;
+  std::vector<std::set<int64_t>> positive_index_loc_set;
 
   DenseMatrix user_factor_grad, item_factor_grad, user_factor_momentum,
       item_factor_momentum;

@@ -31,6 +31,7 @@ PYBIND11_MODULE(_mf, m) {
 
     using LearningConfigType = BPRMFLearningConfig<Real>;
     using BuilderType = typename LearningConfigType::Builder;
+    using TrainerType = BPRMFTrainer<Real>;
     py::class_<LearningConfigType>(m, "BPRMFLearningConfig")
         .def(py::init<LossType, size_t, Real, Real, int, SGDType, Real, Real,
                       Real, size_t>())
@@ -73,6 +74,10 @@ PYBIND11_MODULE(_mf, m) {
         .def("set_epsilon", &BuilderType::set_epsilon)
         .def("set_rho", &BuilderType::set_rho)
         .def("set_n_threads", &BuilderType::set_n_threads);
+
+    py::class_<TrainerType>(m, "BPRMFTrainer")
+        .def(py::init<const BPRMFLearningConfig<Real> &,
+                      const TrainerType::SparseMatrix &>());
   }
   py::class_<IALSLearningConfig>(m, "IALSLearningConfig")
       .def(py::init<size_t, Real, Real, Real, int, size_t, bool, size_t>())
