@@ -4,7 +4,7 @@
 API References
 ==============
 
-.. currentmodule:: irspack.evaluator
+.. currentmodule:: irspack.evaluation
 
 Evaluators
 ----------
@@ -57,42 +57,6 @@ which requires ``jax``, ``jaxlib``, ``dm-haiku``, and ``optax``:
 
     MultVAERecommender
 
-
-.. currentmodule:: irspack.optimizers
-
-Optimizers
------------
-.. autosummary::
-    :toctree: api_reference
-    :nosignatures:
-
-    BaseOptimizer
-    TopPopOptimizer
-    IALSOptimizer
-    P3alphaOptimizer
-    RP3betaOptimizer
-    TruncatedSVDOptimizer
-    CosineKNNOptimizer
-    AsymmetricCosineKNNOptimizer
-    JaccardKNNOptimizer
-    TverskyIndexKNNOptimizer
-    CosineUserKNNOptimizer
-    AsymmetricCosineUserKNNOptimizer
-    SLIMOptimizer
-    DenseSLIMOptimizer
-    MultVAEOptimizer
-    get_optimizer_class
-
-
-Autopilot
----------
-.. autosummary::
-    :toctree: api_reference
-    :nosignatures:
-
-    autopilot
-
-
 .. currentmodule:: irspack.split
 
 Split Functions
@@ -116,4 +80,20 @@ Utilities
     :toctree: api_reference
     :nosignatures:
 
-    IDMappedRecommender
+    ItemIDMapper
+    IDMapper
+
+.. currentmodule:: irspack.dataset
+
+Dataset
+-------
+
+.. autosummary::
+    :toctree: api_reference
+    :nosignatures:
+
+    MovieLens1MDataManager
+    MovieLens100KDataManager
+    MovieLens20MDataManager
+    NeuMFML1MDownloader
+    NeuMFPinterestDownloader

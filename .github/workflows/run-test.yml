@@ -5,34 +5,35 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OS: ubuntu-latest
-      PYTHON: "3.7"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Setup Python
-        uses: actions/setup-python@master
+        uses: actions/setup-python@v3
         with:
-          python-version: 3.7
+          python-version: 3.11
       - name: Build irspack (ubuntu)
         run: |
           pip install --upgrade pip
           sudo apt-get install lcov
-          IRSPACK_TESTING=true python setup.py develop
+          FLAGS="-fprofile-arcs -ftest-coverage"
+          CFLAGS="$FLAGS" CXXFLAGS="$FLAGS" pip install -e .
       - name: Run pytest
         run: |
-          pip install pytest pytest-cov
-          pip install lightfm jaxlib jax dm-haiku optax
-          IRSPACK_TESTING=true pytest --cov=./irspack tests/
+          pip install setuptools wheel pytest pytest-mock pytest-cov
+          pip install jaxlib jax dm-haiku optax
+          pip install --no-use-pep517 lightfm
+          pytest --cov=./src/irspack tests/
       - name: Generate coverage (ubuntu)
         run: |
           coverage xml
           lcov -d `pwd` -c -o coverage.info
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           files: ./coverage.xml,./coverage.info
+          name: codecov-umbrella
+          fail_ci_if_error: true
           verbose: false
           env_vars: OS,PYTHON
-          name: codecov-umbrella
-          fail_ci_if_error: false

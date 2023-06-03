@@ -8,7 +8,7 @@ temp/*
 **.log
 **.csv
 **.db
-irspack.egg-info/*
+src/irspack.egg-info/*
 **.so
 .eggs/
 .python-version
@@ -26,3 +26,5 @@ Pipfile.lock
 pybind11
 docs/build/
 docs/source/api_reference/
+.cache/
+.coverage

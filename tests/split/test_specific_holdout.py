@@ -36,7 +36,7 @@ def test_holdout_particular_item_interaction() -> None:
     validatable_item_ids = np.random.choice(
         item_ids, size=len(item_ids) // 5, replace=False
     )
-    indicator = np.where(df.item_id.isin(validatable_item_ids).values)
+    indicator: np.ndarray = df.item_id.isin(validatable_item_ids).values.nonzero()
     item_id_reprod, dataset = holdout_specific_interactions(
         df,
         "user_id",
@@ -122,12 +122,11 @@ def test_holdout_particular_item_interaction() -> None:
 
 def test_raise() -> None:
     df = df_master.copy()
-    TS_CUTPOINT = 100
     validatable_user_ratio_val = 0.6
     validatable_user_ratio_test = 0.5
     validatable_interactions = (df.timestamp >= 0).values
     with pytest.raises(ValueError):
-        unique_item_ids, dataset = holdout_specific_interactions(
+        _, __ = holdout_specific_interactions(
             df,
             "user_id",
             "item_id",
@@ -172,7 +171,7 @@ def test_holdout_future() -> None:
 
     for userset in [val_users, test_users]:
         # check all of the train_interactions are in the future
-        train_interactions = X_to_df(userset.X_train, userset.user_ids)
+        train_interactions = X_to_df(userset.X_train, np.asarray(userset.user_ids))
         train_interactions_with_ts = train_interactions.merge(
             df_master, on=["user_id", "item_id"], how="inner"
         )
@@ -180,7 +179,7 @@ def test_holdout_future() -> None:
         assert np.all(train_interactions_with_ts.timestamp.values < 0)
 
         # check all of the test_interactions are in the future
-        test_interactions = X_to_df(userset.X_test, userset.user_ids)
+        test_interactions = X_to_df(userset.X_test, np.asarray(userset.user_ids))
         test_interactions_with_ts = test_interactions.merge(
             df_master, on=["user_id", "item_id"], how="inner"
         )

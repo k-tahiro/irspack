@@ -10,10 +10,10 @@ from irspack.recommenders.user_knn import (
 X_small = sps.csr_matrix(
     np.asfarray([[1, 1, 2, 3, 4], [0, 1, 0, 1, 0], [0, 0, 1, 0, 0], [0, 0, 0, 0, 0]])
 )
-X_many = np.random.rand(888, 512)
-X_many[X_many <= 0.9] = 0
-X_many[X_many > 0.9] = 1
-X_many = sps.csr_matrix(X_many)
+X_many_dense = np.random.rand(888, 512)
+X_many_dense[X_many_dense <= 0.9] = 0
+X_many_dense[X_many_dense > 0.9] = 1
+X_many = sps.csr_matrix(X_many_dense)
 X_many.sort_indices()
 
 X_many_dense = sps.csr_matrix(np.random.rand(133, 245))
@@ -27,11 +27,12 @@ def test_cosine(X: sps.csr_matrix, normalize: bool) -> None:
         X, shrinkage=0, n_threads=5, top_k=X.shape[0], normalize=normalize
     )
     with pytest.raises(RuntimeError):
-        U = rec.U
+        rec.U
     rec.learn()
-    sim = rec.U.toarray()
+    U: sps.csr_matrix = rec.U
+    sim = U.toarray()
     manual = X.toarray()  # U x I
-    norm = (manual ** 2).sum(axis=1) ** 0.5
+    norm = (manual**2).sum(axis=1) ** 0.5
     manual = manual.dot(manual.T)
     if normalize:
         denom = norm[:, None] * norm[None, :] + 1e-6
@@ -52,10 +53,11 @@ def test_asymmetric_cosine(X: sps.csr_matrix, alpha: float, shrinkage: float) ->
         X, shrinkage=shrinkage, alpha=alpha, n_threads=1, top_k=X.shape[0]
     )
     rec.learn()
-    sim = rec.U.toarray()
+    U: sps.csr_matrix = rec.U
+    sim = U.toarray()
 
     manual = X.toarray()
-    norm = (manual ** 2).sum(axis=1)
+    norm = (manual**2).sum(axis=1)
     norm_alpha = np.power(norm, alpha)
     norm_1malpha = np.power(norm, 1 - alpha)
     manual_sim = manual.dot(manual.T)
@@ -72,5 +74,6 @@ def test_asymmetric_cosine(X: sps.csr_matrix, alpha: float, shrinkage: float) ->
 def test_topk(X: sps.csr_matrix) -> None:
     rec = AsymmetricCosineUserKNNRecommender(X, shrinkage=0, top_k=30, n_threads=5)
     rec.learn()
-    sim = rec.U.toarray()
+    U: sps.csr_matrix = rec.U
+    sim = U.toarray()
     assert np.all((sim > 0).sum(axis=1) <= 30)
